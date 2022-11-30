@@ -31,8 +31,7 @@ params = SetupParams('air');
 Para = SetupEnvPara('air', 'ambient_soundspeed', c_amb);
 
 % plot experiment data
-palette = GetPalette();
-palette = palette.lancet;
+palette = colorpalette('ieee_foundation');
 
 fH = figure(Position=[1800 0 1000 1000]);
 tH = tiledlayout(2,1, 'TileSpacing','tight', 'Padding','tight');

@@ -6,16 +6,17 @@ params = SetupParams('air');
 Para = SetupEnvPara('air');
 
 % All bubble radii for current simulation
-load bubbledistr-experiment.mat
-nBin = 21;
-nBub = 1e3;
-bubRadPop = randsample(bubRad, nBub, true, bubPdf);
-binEdge = linspace(min(bubRadPop), max(bubRadPop), nBin);
-n_gt = histcounts(bubRadPop, binEdge);
+% load bubbledistr-experiment.mat
+% nBin = 21;
+% nBub = 1e3;
+% bubRadPop = randsample(bubRad, nBub, true, bubPdf);
+% binEdge = linspace(min(bubRadPop), max(bubRadPop), nBin);
+% n_gt = histcounts(bubRadPop, binEdge);
+load bubbles_exp.mat
 
 %% Get simulation result and visulization
 % plot ground truth histogram
-palette = GetPalette();
+palette = colorpalette('ieee_light');
 palette = palette.uchicago;
 
 fH = figure(Position=[1800 0 1000 800]);

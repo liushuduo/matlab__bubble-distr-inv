@@ -18,7 +18,7 @@ ylim([0 1.5])
 grid on
 aH.FontName = 'Times';
 aH.FontSize = 8;
-exportgraphics(fH, './figures/Na.png', 'Resolution', 600);
+% exportgraphics(fH, './figures/Na.png', 'Resolution', 600);
 
 % convert N(a) to vector N
 nBin = 31;
@@ -40,7 +40,9 @@ aH.FontSize = 8;
 grid on
 xlabel('bubble radius (mm)')
 ylabel('$\mathbf{n}$', 'Interpreter','latex');
-exportgraphics(fH, './figures/vecN.png', 'Resolution', 600);
+% exportgraphics(fH, './figures/vecN.png', 'Resolution', 600);
+
+%% Simulation 
 
 
 
