@@ -36,7 +36,7 @@ aH.YAxis.Exponent = 3;
 bH.EdgeColor = "none";
 bH.FaceColor = palette{1};
 aH.FontName = 'Times';
-aH.FontSize = 8;
+aH.FontSize = 7;
 grid on
 xlabel('bubble radius (mm)')
 ylabel('$\mathbf{n}$', 'Interpreter','latex');

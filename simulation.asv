@@ -60,7 +60,33 @@ exportgraphics(aH, 'figures/fig_bubble-histogram.pdf', 'Resolution', 600);
 % Get simulation result
 f_sim = 100 : 100 : 9e3;
 [c_b_sim, alpha_b_sim, c_eff_sim] = SoundspeedResponse(bubRadPop, f_sim, 1, params, Para);
-measureFreq = [1 2 4 5 6 8] * 1e3;
+
+%% fig: simulation
+fH = figure(Position=[1800 0 1000 800]);
+tH = tiledlayout(1,1, 'TileSpacing','tight', 'Padding','tight');
+tH.Units = "inches";
+tH.OuterPosition = [0 0 3.5 3.5/5*3];
+aH = nexttile;
+plot(f_sim/1e3, c_b_sim/1e3, 'LineWidth', 1)
+aH.YLim = [1.35, 1.6]
+xlabel('frequency (kHz)')
+ylabel('sound speed (km/s)')
+
+yyaxis right
+plot(f_sim/1e3, -alpha_b_sim, 'LineWidth', 1)
+ylabel('attenuation (dB/m)')
+
+aH.YAxis(1).Color = 'k';    aH.YAxis(2).Color = 'k';
+grid(aH, 'on');
+aH.FontName = 'Arial';
+aH.FontSize = 7;
+axis tight
+
+legend('sound speed', 'attenuation')
+% exportgraphics(fH, './figures/fig_simulation.pdf', 'Resolution', 600);
+
+%% Get mesurements from the simulation
+measureFreq = [1 2 4 5 6 8 10 15 20] * 1e3;
 
 c_eff_measure = [];
 for f = measureFreq
@@ -76,46 +102,10 @@ alpha_b_measure_n = - 2 * pi * 20 / log(10) * imag( 1 ./ c_eff_measure_n ) .* me
 alpha_b_measure_n( alpha_b_measure_n < 0 ) = 0;
 
 % do interpolation
-freqBin = 1e3 : 100 : 8e3;
+freqBin = 1e3 : 100 : 20e3;
 c_b_inv = interp1(measureFreq, c_b_measure_n, freqBin, 'pchip');
 alpha_b_inv = interp1(measureFreq, alpha_b_measure_n, freqBin, 'pchip');
 
-%% fig: simulation
-fH = figure(Position=[1800 0 1000 800]);
-tH = tiledlayout(1,1, 'TileSpacing','tight', 'Padding','tight');
-tH.Units = "inches";
-tH.OuterPosition = [0 0 3.5 3.5/5*3];
-aH = nexttile;
-hold(aH,'on')
-plot(f_sim/1e3, c_b_sim/1e3, 'LineWidth', 1)
-aH.YLim = [1.35, 1.6];
-xlabel('frequency (kHz)')
-ylabel('sound speed (km/s)')
-sH = scatter(measureFreq/1e3, c_b_measure_n/1e3);
-sH.Marker = 'square';
-sH.SizeData = 40;
-plot(freqBin/1e3, c_b_inv/1e3, 'LineStyle', '--', 'LineWidth', 1);
-
-yyaxis right
-plot(f_sim/1e3, -alpha_b_sim, 'LineWidth', 1)
-sH = scatter(measureFreq/1e3, alpha_b_measure_n);
-sH.Marker = 'diamond';
-plot(freqBin/1e3, alpha_b_inv, 'LineStyle', '--', 'LineWidth', 1);
-sH.SizeData = 40;
-
-ylabel('attenuation (dB/m)')
-
-aH.YAxis(1).Color = 'k';    aH.YAxis(2).Color = 'k';
-grid(aH, 'on');
-aH.FontName = 'Arial';
-aH.FontSize = 7;
-axis tight
-
-legend('sound speed', 'attenuation')
-% exportgraphics(fH, './figures/fig_simulation.pdf', 'Resolution', 600);
-
-
-%%
 % plot the sound speed interpolation
 fH = figure(Position=[1800 0 1000 800]);
 tH = tiledlayout(1,1, 'TileSpacing','tight', 'Padding','tight');
